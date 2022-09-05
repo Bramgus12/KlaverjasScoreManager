@@ -1,45 +1,49 @@
+import { NavigationProp } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
 import { Text, Button } from "react-native-paper"
+import { rootStackParamType } from "../Routing";
 
-function Main() {
+function Main(props: { navigation: NavigationProp<rootStackParamType, "Home"> }) {
+    const { navigation } = props;
+    
+
     return (
-        <>
-            <View style={styles.container}>
-                <Text variant="headlineLarge" style={styles.appTitle}>
-                    Klaverjas scoreboard
-                </Text>
-                <Text>
-                    Kies het aantal personen
-                </Text>
-                <View style={styles.buttonContainer}>
-                    <Button 
-                        mode="contained-tonal" 
-                        labelStyle={styles.startButtonLabel}
-                        style={styles.startButton}
-                        onPress={() => console.log("test")}
-                        contentStyle={styles.startButtonContent}
-                        uppercase
-                    >
-                        3
-                    </Button>
-                    <Button 
-                        mode="contained-tonal" 
-                        labelStyle={styles.startButtonLabel}
-                        style={styles.startButton}
-                        onPress={() => console.log("test")}
-                        contentStyle={styles.startButtonContent}
-                        uppercase
-                    >
-                        4
-                    </Button>
-                </View>
+        <View style={styles.container}>
+            <Text variant="headlineLarge" style={styles.appTitle}>
+                Klaverjas scoreboard
+            </Text>
+            <Text>
+                Kies het aantal personen
+            </Text>
+            <View style={styles.buttonContainer}>
+                <Button 
+                    mode="contained-tonal" 
+                    labelStyle={styles.startButtonLabel}
+                    style={styles.startButton}
+                    onPress={() => navigation.navigate("TableView")}
+                    contentStyle={styles.startButtonContent}
+                    uppercase
+                >
+                    3
+                </Button>
+                <Button 
+                    mode="contained-tonal" 
+                    labelStyle={styles.startButtonLabel}
+                    style={styles.startButton}
+                    onPress={() => navigation.navigate("TableView")}
+                    contentStyle={styles.startButtonContent}
+                    uppercase
+                >
+                    4
+                </Button>
             </View>
-        </>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         display: "flex",
         height: "100%",
         flexDirection: "column",
