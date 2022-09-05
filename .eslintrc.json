@@ -23,7 +23,7 @@
     "react/no-string-refs": 2,
     "react/jsx-wrap-multilines": 2,
     "react/self-closing-comp": 2,
-    "react/jsx-no-bind": 2,
+    "react/jsx-no-bind": 0,
     "react/require-render-return": 2,
     "react/sort-comp": 2,
     "react/no-is-mounted": 2,
