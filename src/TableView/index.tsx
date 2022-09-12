@@ -1,11 +1,11 @@
+import { NavigationProp } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
-import { MD3Theme, Text, withTheme } from "react-native-paper";
+import { FAB, MD3Theme, Text, withTheme } from "react-native-paper";
+import { rootStackParamType } from "../../Routing";
 
-function TableView(props: { theme: MD3Theme }) {
-    const { colors } = props.theme;
-
-    console.log(colors);
-    
+function TableView(props: { theme: MD3Theme, navigation: NavigationProp<rootStackParamType, "TableView"> }) {
+    const { colors } = props.theme; 
+    const { navigation } = props;   
 
     const styles = StyleSheet.create({
         column: {
@@ -51,7 +51,12 @@ function TableView(props: { theme: MD3Theme }) {
             display: "flex", 
             flexDirection: "row",
             padding: 90,
-        }
+        },
+        fabStyle: {
+            bottom: 32,
+            right: 32,
+            position: "absolute",
+        },
     })
 
     return (
@@ -94,6 +99,12 @@ function TableView(props: { theme: MD3Theme }) {
                     </View>
                 ))}
             </View>
+            <FAB
+                icon={"plus"}
+                label={"Voeg score toe"}
+                onPress={() => navigation.navigate("CreateRound")}
+                style={styles.fabStyle}
+            />
         </View>
     )
 }

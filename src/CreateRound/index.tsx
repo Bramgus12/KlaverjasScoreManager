@@ -1,11 +1,11 @@
 import { NavigationProp } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
-import { Text, Button } from "react-native-paper"
-import { rootStackParamType } from "../Routing";
+import { Button, Text } from "react-native-paper";
+import { rootStackParamType } from "../../Routing";
 
-function Main(props: { navigation: NavigationProp<rootStackParamType, "Home"> }) {
+function CreateRound(props: { navigation: NavigationProp<rootStackParamType, "CreateRound"> }) {
     const { navigation } = props;
-    
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -34,39 +34,34 @@ function Main(props: { navigation: NavigationProp<rootStackParamType, "Home"> })
             height: 40,
         }
     })
-
+    
     return (
         <View style={styles.container}>
             <Text variant="headlineLarge" style={styles.appTitle}>
-                Klaverjas scoreboard
-            </Text>
-            <Text>
-                Kies het aantal personen
+                Wie gaat er?
             </Text>
             <View style={styles.buttonContainer}>
                 <Button 
                     mode="contained-tonal" 
                     labelStyle={styles.startButtonLabel}
                     style={styles.startButton}
-                    onPress={() => navigation.navigate("TableView")}
+                    onPress={() => navigation.navigate("AddPoints", { whoGoes: "we" })}
                     contentStyle={styles.startButtonContent}
-                    uppercase
                 >
-                    3
+                    Wij
                 </Button>
                 <Button 
                     mode="contained-tonal" 
                     labelStyle={styles.startButtonLabel}
+                    onPress={() => navigation.navigate("AddPoints", { whoGoes: "them" })}
                     style={styles.startButton}
-                    onPress={() => navigation.navigate("TableView")}
                     contentStyle={styles.startButtonContent}
-                    uppercase
                 >
-                    4
+                    Zij
                 </Button>
             </View>
         </View>
     )
 }
 
-export default Main;
+export default CreateRound;
