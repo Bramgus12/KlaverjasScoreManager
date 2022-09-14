@@ -80,7 +80,7 @@ function CreateRound(props: { navigation: NavigationProp<RoutingType, "CreateRou
     return (
         <View style={styles.container}>
             <Text variant="headlineLarge" style={styles.appTitle}>
-                Wie gaat er?
+                Wie gaan er?
             </Text>
             <View style={styles.buttonContainer}>
                 <Controller
@@ -114,7 +114,7 @@ function CreateRound(props: { navigation: NavigationProp<RoutingType, "CreateRou
                 </Text>
             </View>
             <Text variant="headlineLarge" style={styles.appTitle}>
-                Wat is de troef?
+                Wat is troef?
             </Text>
             <View style={styles.buttonContainer}>
                 <Controller
