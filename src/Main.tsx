@@ -1,11 +1,11 @@
 import { NavigationProp } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
-import { Text, Button } from "react-native-paper"
-import { rootStackParamType } from "../Routing";
+import { Text, Button } from "react-native-paper";
+import { RoutingType } from "../RoutingType";
 
-function Main(props: { navigation: NavigationProp<rootStackParamType, "Home"> }) {
+function Main(props: { navigation: NavigationProp<RoutingType, "Home"> }) {
     const { navigation } = props;
-    
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -13,7 +13,7 @@ function Main(props: { navigation: NavigationProp<rootStackParamType, "Home"> })
             height: "100%",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
         },
         appTitle: {
             marginBottom: 150,
@@ -32,8 +32,8 @@ function Main(props: { navigation: NavigationProp<rootStackParamType, "Home"> })
         },
         startButtonContent: {
             height: 40,
-        }
-    })
+        },
+    });
 
     return (
         <View style={styles.container}>
@@ -44,8 +44,8 @@ function Main(props: { navigation: NavigationProp<rootStackParamType, "Home"> })
                 Kies het aantal personen
             </Text>
             <View style={styles.buttonContainer}>
-                <Button 
-                    mode="contained-tonal" 
+                <Button
+                    mode="contained-tonal"
                     labelStyle={styles.startButtonLabel}
                     style={styles.startButton}
                     onPress={() => navigation.navigate("TableView")}
@@ -54,8 +54,8 @@ function Main(props: { navigation: NavigationProp<rootStackParamType, "Home"> })
                 >
                     3
                 </Button>
-                <Button 
-                    mode="contained-tonal" 
+                <Button
+                    mode="contained-tonal"
                     labelStyle={styles.startButtonLabel}
                     style={styles.startButton}
                     onPress={() => navigation.navigate("TableView")}
@@ -66,7 +66,7 @@ function Main(props: { navigation: NavigationProp<rootStackParamType, "Home"> })
                 </Button>
             </View>
         </View>
-    )
+    );
 }
 
 export default Main;

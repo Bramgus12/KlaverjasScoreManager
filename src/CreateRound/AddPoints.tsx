@@ -2,7 +2,6 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import { Text, TextInput } from "react-native-paper";
 
 function AddPoints() {
-
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -14,7 +13,7 @@ function AddPoints() {
         formContainer: {
             display: "flex",
             flexDirection: "row",
-            flexWrap: "wrap"
+            flexWrap: "wrap",
         },
         formColumn: {
             display: "flex",
@@ -27,8 +26,8 @@ function AddPoints() {
         },
         textInput: {
             margin: 8,
-        }
-    })
+        },
+    });
 
     return (
         <SafeAreaView style={styles.container}>
@@ -40,7 +39,7 @@ function AddPoints() {
                     <Text>
                         Wij
                     </Text>
-                    <TextInput 
+                    <TextInput
                         mode="flat"
                         label="Punten"
                         style={styles.textInput}
@@ -68,7 +67,7 @@ function AddPoints() {
                 </View>
             </View>
         </SafeAreaView>
-    )
+    );
 }
 
 export default AddPoints;

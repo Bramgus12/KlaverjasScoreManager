@@ -1,11 +1,12 @@
 import { NavigationProp } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
-import { FAB, MD3Theme, Text, withTheme } from "react-native-paper";
-import { rootStackParamType } from "../../Routing";
+import {
+    FAB, MD3Theme, Text, withTheme,
+} from "react-native-paper";
+import { RoutingType } from "../../RoutingType";
 
-function TableView(props: { theme: MD3Theme, navigation: NavigationProp<rootStackParamType, "TableView"> }) {
-    const { colors } = props.theme; 
-    const { navigation } = props;   
+function TableView(props: { theme: MD3Theme, navigation: NavigationProp<RoutingType, "TableView"> }) {
+    const { navigation, theme: { colors } } = props;
 
     const styles = StyleSheet.create({
         column: {
@@ -42,13 +43,13 @@ function TableView(props: { theme: MD3Theme, navigation: NavigationProp<rootStac
         divider: {
             height: "100%",
             width: 1,
-            backgroundColor: "grey"
+            backgroundColor: "grey",
         },
-        container: { 
-            flex: 1, 
-            alignItems: "center", 
-            justifyContent: "center", 
-            display: "flex", 
+        container: {
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
             flexDirection: "row",
             padding: 90,
         },
@@ -57,12 +58,12 @@ function TableView(props: { theme: MD3Theme, navigation: NavigationProp<rootStac
             right: 32,
             position: "absolute",
         },
-    })
+    });
 
     return (
         <View style={styles.container}>
             <View style={styles.numberColumn}>
-                <View style={{...styles.topRowNumber, borderTopLeftRadius: 10}} />
+                <View style={{ ...styles.topRowNumber, borderTopLeftRadius: 10 }} />
                 {Array.from(Array(10).keys()).map((number) => (
                     <View style={styles.row} key={number}>
                         <Text variant="headlineSmall" style={styles.text}>
@@ -73,7 +74,7 @@ function TableView(props: { theme: MD3Theme, navigation: NavigationProp<rootStac
             </View>
             <View style={styles.column}>
                 <View style={styles.topRow}>
-                    <Text variant="headlineMedium" style={{...styles.text, color: "white"}}>
+                    <Text variant="headlineMedium" style={{ ...styles.text, color: "white" }}>
                         Wij
                     </Text>
                 </View>
@@ -86,7 +87,7 @@ function TableView(props: { theme: MD3Theme, navigation: NavigationProp<rootStac
                 ))}
             </View>
             <View style={styles.column}>
-                <View style={{...styles.topRow, borderTopRightRadius: 10}}>
+                <View style={{ ...styles.topRow, borderTopRightRadius: 10 }}>
                     <Text variant="headlineMedium" style={{ ...styles.text, color: "white" }}>
                         Zij
                     </Text>
@@ -100,13 +101,13 @@ function TableView(props: { theme: MD3Theme, navigation: NavigationProp<rootStac
                 ))}
             </View>
             <FAB
-                icon={"plus"}
-                label={"Voeg score toe"}
+                icon="plus"
+                label="Voeg score toe"
                 onPress={() => navigation.navigate("CreateRound")}
                 style={styles.fabStyle}
             />
         </View>
-    )
+    );
 }
 
 export default withTheme(TableView);
