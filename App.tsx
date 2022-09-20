@@ -4,8 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import Routing from "./Routing";
 
 const theme = {
-    ...MD3LightTheme
-}
+    ...MD3LightTheme,
+};
 
 export default function App() {
     return (

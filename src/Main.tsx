@@ -1,7 +1,9 @@
 import { NavigationProp } from "@react-navigation/native";
+import { useCallback, useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { Text, Button } from "react-native-paper";
 import { RoutingType } from "../RoutingType";
+import { TableContext } from "./TableView/TableContext";
 
 function Main(props: { navigation: NavigationProp<RoutingType, "Home"> }) {
     const { navigation } = props;
@@ -35,6 +37,13 @@ function Main(props: { navigation: NavigationProp<RoutingType, "Home"> }) {
         },
     });
 
+    const { addAmountOfPlayers } = useContext(TableContext);
+
+    const handleButtonPress = useCallback((amountOfPlayers: 3 | 4) => {
+        addAmountOfPlayers(amountOfPlayers);
+        navigation.navigate("TableView");
+    }, [addAmountOfPlayers, navigation]);
+
     return (
         <View style={styles.container}>
             <Text variant="headlineLarge" style={styles.appTitle}>
@@ -48,7 +57,7 @@ function Main(props: { navigation: NavigationProp<RoutingType, "Home"> }) {
                     mode="contained-tonal"
                     labelStyle={styles.startButtonLabel}
                     style={styles.startButton}
-                    onPress={() => navigation.navigate("TableView")}
+                    onPress={() => handleButtonPress(3)}
                     contentStyle={styles.startButtonContent}
                     uppercase
                 >
@@ -58,7 +67,7 @@ function Main(props: { navigation: NavigationProp<RoutingType, "Home"> }) {
                     mode="contained-tonal"
                     labelStyle={styles.startButtonLabel}
                     style={styles.startButton}
-                    onPress={() => navigation.navigate("TableView")}
+                    onPress={() => handleButtonPress(4)}
                     contentStyle={styles.startButtonContent}
                     uppercase
                 >

@@ -1,11 +1,27 @@
+import { NavigationProp } from "@react-navigation/native";
+import { useCallback, useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import {
     Button, FAB, IconButton, MD3Theme, Text, withTheme,
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { CreateRoundRoutingType } from "./CreateRoundRoutingType";
+import { PointsRoemState, RoundContext } from "./RoundContext";
 
-function AddRoem(props: { theme: MD3Theme }) {
-    const { theme: { colors } } = props;
+function AddRoem(props: { theme: MD3Theme, navigation: NavigationProp<CreateRoundRoutingType, "AddRoem"> }) {
+    const { theme: { colors }, navigation } = props;
+
+    const [roemState, setRoemState] = useState<PointsRoemState>({
+        we: 0,
+        them: 0,
+    });
+
+    const { addRoem } = useContext(RoundContext);
+
+    const toNextPage = useCallback(() => {
+        addRoem(roemState);
+        navigation.navigate("AddPoints");
+    }, [addRoem, navigation, roemState]);
 
     const styles = StyleSheet.create({
         container: {
@@ -83,20 +99,44 @@ function AddRoem(props: { theme: MD3Theme }) {
                             <View style={styles.roemContainer}>
                                 <View style={styles.chip}>
                                     <Text variant="displayLarge" style={styles.chipText}>
-                                        0
+                                        {roemState.we}
                                     </Text>
                                 </View>
-                                <IconButton icon="undo-variant" mode="contained" />
+                                <IconButton
+                                    icon="backspace"
+                                    mode="contained"
+                                    onPress={() => (
+                                        setRoemState((prev) => ({ ...prev, we: 0 }))
+                                    )}
+                                />
                             </View>
                             <View style={styles.break} />
-                            <Button mode="contained" style={styles.addButtons}>
+                            <Button
+                                mode="contained"
+                                style={styles.addButtons}
+                                onPress={() => (
+                                    setRoemState((prev) => ({ ...prev, we: prev.we + 20 }))
+                                )}
+                            >
                                 +20
                             </Button>
-                            <Button mode="contained" style={styles.addButtons}>
+                            <Button
+                                mode="contained"
+                                style={styles.addButtons}
+                                onPress={() => (
+                                    setRoemState((prev) => ({ ...prev, we: prev.we + 50 }))
+                                )}
+                            >
                                 +50
                             </Button>
                             <View style={styles.break} />
-                            <Button mode="contained" style={styles.addButtons}>
+                            <Button
+                                mode="contained"
+                                style={styles.addButtons}
+                                onPress={() => (
+                                    setRoemState((prev) => ({ ...prev, we: prev.we + 100 }))
+                                )}
+                            >
                                 +100
                             </Button>
                         </View>
@@ -109,29 +149,52 @@ function AddRoem(props: { theme: MD3Theme }) {
                             <View style={styles.roemContainer}>
                                 <View style={styles.chip}>
                                     <Text variant="displayLarge" style={styles.chipText}>
-                                        0
+                                        {roemState.them}
                                     </Text>
                                 </View>
-                                <IconButton icon="undo-variant" mode="contained" />
+                                <IconButton
+                                    icon="backspace"
+                                    mode="contained"
+                                    onPress={() => (
+                                        setRoemState((prev) => ({ ...prev, them: 0 }))
+                                    )}
+                                />
                             </View>
                             <View style={styles.break} />
-                            <Button mode="contained" style={styles.addButtons}>
+                            <Button
+                                mode="contained"
+                                style={styles.addButtons}
+                                onPress={() => (
+                                    setRoemState((prev) => ({ ...prev, them: prev.them + 20 }))
+                                )}
+                            >
                                 +20
                             </Button>
-                            <Button mode="contained" style={styles.addButtons}>
+                            <Button
+                                mode="contained"
+                                style={styles.addButtons}
+                                onPress={() => (
+                                    setRoemState((prev) => ({ ...prev, them: prev.them + 50 }))
+                                )}
+                            >
                                 +50
                             </Button>
-                            <Button mode="contained" style={styles.addButtons}>
+                            <Button
+                                mode="contained"
+                                style={styles.addButtons}
+                                onPress={() => (
+                                    setRoemState((prev) => ({ ...prev, them: prev.them + 100 }))
+                                )}
+                            >
                                 +100
                             </Button>
                         </View>
                     </View>
                 </View>
-
             </SafeAreaView>
             <FAB
                 icon="arrow-right"
-                onPress={() => console.log("test")}
+                onPress={toNextPage}
                 style={styles.fabStyle}
             />
         </>

@@ -11,16 +11,16 @@ import {
 } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
 import { RoutingType } from "../../RoutingType";
-import { RoundContext } from "./RoundContext";
+import { RoundContext, TurfType, WhoGoesType } from "./RoundContext";
 
 type FormType = {
-    whoGoes: "We" | "Them";
-    turf: "Hearts" | "Clubs" | "Spades" | "Diamonds";
+    whoGoes: WhoGoesType;
+    turf: TurfType;
 };
 
 function CreateRound(props: { navigation: NavigationProp<RoutingType, "CreateRound"> }) {
     const { navigation } = props;
-    const { setRoundState } = useContext(RoundContext);
+    const { addWhoGoes, addTurf } = useContext(RoundContext);
     const { control, handleSubmit, formState: { errors } } = useForm<FormType>({
         defaultValues: {
             whoGoes: null,
@@ -73,9 +73,10 @@ function CreateRound(props: { navigation: NavigationProp<RoutingType, "CreateRou
     });
 
     const onSubmit = useCallback((state: FormType) => {
-        setRoundState((prev) => ({ ...prev, ...state }));
+        addWhoGoes(state.whoGoes);
+        addTurf(state.turf);
         navigation.navigate("AddRoem");
-    }, []);
+    }, [addTurf, addWhoGoes, navigation]);
 
     return (
         <View style={styles.container}>
@@ -92,17 +93,17 @@ function CreateRound(props: { navigation: NavigationProp<RoutingType, "CreateRou
                                 Wij
                             </Text>
                             <RadioButton.Android
-                                status={(value === "We") ? "checked" : "unchecked"}
-                                value="We"
-                                onPress={() => onChange("We")}
+                                status={(value === "we") ? "checked" : "unchecked"}
+                                value="we"
+                                onPress={() => onChange("we")}
                             />
                             <Text variant="titleLarge">
                                 Zij
                             </Text>
                             <RadioButton.Android
-                                status={(value === "Them") ? "checked" : "unchecked"}
-                                value="Them"
-                                onPress={() => onChange("Them")}
+                                status={(value === "them") ? "checked" : "unchecked"}
+                                value="them"
+                                onPress={() => onChange("them")}
                             />
                         </>
                     )}
