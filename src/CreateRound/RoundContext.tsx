@@ -1,31 +1,10 @@
 import {
-    createContext, useCallback, useMemo, useState,
+    createContext, useCallback, useContext, useMemo, useState,
 } from "react";
-
-export type PointsRoemState = {
-    we: number;
-    them: number;
-};
-
-export type WhoGoesType = "we" | "them";
-
-export type TurfType = "Hearts" | "Clubs" | "Spades" | "Diamonds";
-
-export type RoundStateType = {
-    whoGoes: WhoGoesType;
-    turf: TurfType;
-    roem: PointsRoemState;
-    points: PointsRoemState;
-};
-
-type ContextType = {
-    roundState: RoundStateType;
-    setRoundState: React.Dispatch<React.SetStateAction<RoundStateType>>;
-    addRoem: (roem: PointsRoemState) => void;
-    addWhoGoes: (whoGoes: WhoGoesType) => void;
-    addTurf: (turf: TurfType) => void;
-    addPoints: (points: PointsRoemState) => void;
-};
+import { TableContext } from "../TableView/TableContext";
+import {
+    ContextType, PointsRoemState, RoundStateType, TurfType, WhoGoesType,
+} from "./RoundContextTypes";
 
 export const RoundContext = createContext<ContextType>({
     roundState: null,
@@ -38,6 +17,7 @@ export const RoundContext = createContext<ContextType>({
 
 function RoundProvider(props: { children: React.ReactNode }) {
     const { children } = props;
+    const { addRoundToTable } = useContext(TableContext);
     const [roundState, setRoundState] = useState<RoundStateType>({
         whoGoes: null,
         turf: null,
@@ -64,8 +44,8 @@ function RoundProvider(props: { children: React.ReactNode }) {
     }, []);
 
     const addPoints = useCallback((points: PointsRoemState) => {
-        setRoundState((prev) => ({ ...prev, points }));
-    }, []);
+        addRoundToTable({ ...roundState, points });
+    }, [addRoundToTable, roundState]);
 
     const providerValue = useMemo(() => ({
         roundState,

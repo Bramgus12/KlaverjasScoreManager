@@ -1,3 +1,5 @@
+import { CompositeNavigationProp } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
     useCallback, useContext,
 } from "react";
@@ -8,14 +10,19 @@ import {
 import {
     Button, FAB, Text, TextInput,
 } from "react-native-paper";
-import { RoundContext, WhoGoesType } from "./RoundContext";
+import { RoutingType } from "../../RoutingType";
+import { CreateRoundRoutingType } from "./CreateRoundRoutingType";
+import { RoundContext } from "./RoundContext";
+import { WhoGoesType } from "./RoundContextTypes";
 
 type FormType = {
     we: string;
     them: string;
 };
 
-function AddPoints() {
+type AddPointsNavigationProp = CompositeNavigationProp<NativeStackNavigationProp<CreateRoundRoutingType, "AddPoints">, NativeStackNavigationProp<RoutingType>>;
+
+function AddPoints(props: { navigation: AddPointsNavigationProp }) {
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -66,6 +73,8 @@ function AddPoints() {
     });
 
     const { roundState, addPoints } = useContext(RoundContext);
+    // eslint-disable-next-line react/prop-types
+    const { navigation } = props;
 
     const {
         control, getValues, handleSubmit, setValue,
@@ -76,20 +85,32 @@ function AddPoints() {
         },
     });
 
-    const Buttons = useCallback((props: { isGoing: boolean, team: WhoGoesType }) => {
-        const { isGoing, team } = props;
+    const handlePitPress = useCallback((team: WhoGoesType) => {
+        setValue(team, "162");
+        setValue((team === "we") ? "them" : "we", "0");
+    }, [setValue]);
 
-        const onPitPress = useCallback(() => {
-            setValue(team, "162", { shouldDirty: true });
-            setValue((team === "we") ? team : "them", "0", { shouldDirty: true });
-        }, [team]);
+    const handleNatPress = useCallback((team: WhoGoesType) => {
+        setValue(team, "0");
+        setValue((team === "we") ? "them" : "we", "162");
+    }, [setValue]);
+
+    const Buttons = useCallback((_props: {
+        isGoing: boolean;
+        team: WhoGoesType;
+        onPitPress: (team: WhoGoesType) => void;
+        onNatPress: (team: WhoGoesType) => void;
+    }) => {
+        const {
+            isGoing, team, onPitPress, onNatPress,
+        } = _props;
 
         return (
             <View style={styles.buttonsContainer}>
                 <View style={styles.buttons}>
                     <Button
                         mode="contained"
-                        onPress={onPitPress}
+                        onPress={() => onPitPress(team)}
                     >
                         Pit
                     </Button>
@@ -98,6 +119,7 @@ function AddPoints() {
                     <View style={styles.buttons}>
                         <Button
                             mode="contained"
+                            onPress={() => onNatPress(team)}
                         >
                             Nat
                         </Button>
@@ -105,10 +127,10 @@ function AddPoints() {
                 ) : null}
             </View>
         );
-    }, [setValue, styles.buttons, styles.buttonsContainer]);
+    }, [styles.buttons, styles.buttonsContainer]);
 
-    const TotalPoints = useCallback((props: { roem: number, points: number }) => {
-        const { roem, points } = props;
+    const TotalPoints = useCallback((_props: { roem: number, points: number }) => {
+        const { roem, points } = _props;
         return (
             <Text style={styles.formColumnText}>
                 {`Total: ${roem + points}`}
@@ -118,7 +140,8 @@ function AddPoints() {
 
     const handleToNextPage = useCallback((state: FormType) => {
         addPoints({ we: parseInt(state.we, 10), them: parseInt(state.them, 10) });
-    }, [addPoints]);
+        navigation.navigate("TableView");
+    }, [addPoints, navigation]);
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -134,6 +157,7 @@ function AddPoints() {
                         <Controller
                             control={control}
                             name="we"
+                            defaultValue=""
                             rules={{
                                 required: true,
                                 max: 162,
@@ -159,7 +183,12 @@ function AddPoints() {
                             )}
                         />
                         <TotalPoints roem={roundState.roem.we} points={roundState.points.we} />
-                        <Buttons isGoing={roundState.whoGoes === "we"} team="we" />
+                        <Buttons
+                            isGoing={roundState.whoGoes === "we"}
+                            team="we"
+                            onPitPress={handlePitPress}
+                            onNatPress={handleNatPress}
+                        />
                     </View>
                     <View style={styles.formColumn}>
                         <Text variant="displaySmall" style={styles.formColumnText}>
@@ -168,6 +197,7 @@ function AddPoints() {
                         <Controller
                             control={control}
                             name="them"
+                            defaultValue=""
                             rules={{
                                 required: true,
                                 max: 162,
@@ -194,7 +224,12 @@ function AddPoints() {
                         />
 
                         <TotalPoints roem={roundState.roem.them} points={roundState.points.them} />
-                        <Buttons isGoing={roundState.whoGoes === "them"} team="them" />
+                        <Buttons
+                            isGoing={roundState.whoGoes === "them"}
+                            team="them"
+                            onPitPress={handlePitPress}
+                            onNatPress={handleNatPress}
+                        />
                     </View>
                 </View>
                 <FAB

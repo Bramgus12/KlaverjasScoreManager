@@ -1,7 +1,7 @@
 import {
     createContext, useCallback, useMemo, useState,
 } from "react";
-import { RoundStateType } from "../CreateRound/RoundContext";
+import { RoundStateType } from "../CreateRound/RoundContextTypes";
 
 export type AmountOfPlayersType = 3 | 4;
 
@@ -12,12 +12,13 @@ export type TableStateType = {
 
 type ContextType = {
     tableState?: TableStateType;
-    addRoundToTable?: (round: RoundStateType) => void;
     addAmountOfPlayers?: (AmountOfPlayers: AmountOfPlayersType) => void;
+    addRoundToTable?: (round: RoundStateType) => void;
 };
 
 export const TableContext = createContext<ContextType>({
     tableState: null,
+    addAmountOfPlayers: null,
     addRoundToTable: null,
 });
 
@@ -29,7 +30,15 @@ export function TableProvider(props: { children: React.ReactNode }) {
     });
 
     const addRoundToTable = useCallback((round: RoundStateType) => {
-        setTableState((prev) => ({ ...prev, tableData: [...prev.tableData, round] }));
+        setTableState((prev) => (
+            {
+                ...prev,
+                tableData: [
+                    ...prev.tableData,
+                    round,
+                ],
+            }
+        ));
     }, []);
 
     const addAmountOfPlayers = useCallback((amountOfPlayers: AmountOfPlayersType) => {

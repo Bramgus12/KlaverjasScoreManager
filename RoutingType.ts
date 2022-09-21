@@ -1,7 +1,8 @@
+import { NavigatorScreenParams } from "@react-navigation/native";
+import { CreateRoundRoutingType } from "./src/CreateRound/CreateRoundRoutingType";
+
 export type RoutingType = {
     Home: undefined,
     TableView: undefined,
-    CreateRound: undefined,
-    AddRoem: { whoGoes: "we" | "them" },
-    AddPoints: { whoGoes: "we" | "them" },
+    CreateRound: NavigatorScreenParams<CreateRoundRoutingType>,
 };
