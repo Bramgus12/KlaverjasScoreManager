@@ -12,7 +12,9 @@ export const RoundContext = createContext<ContextType>({
     addRoem: null,
     addWhoGoes: null,
     addTurf: null,
-    addPoints: null,
+    addWePoints: null,
+    addThemPoints: null,
+    addPointsToTable: null,
 });
 
 function RoundProvider(props: { children: React.ReactNode }) {
@@ -43,8 +45,16 @@ function RoundProvider(props: { children: React.ReactNode }) {
         setRoundState((prev) => ({ ...prev, turf }));
     }, []);
 
-    const addPoints = useCallback((points: PointsRoemState) => {
-        addRoundToTable({ ...roundState, points });
+    const addWePoints = useCallback((points: number) => {
+        setRoundState((prev) => ({ ...prev, points: { ...prev.points, we: points } }));
+    }, []);
+
+    const addThemPoints = useCallback((points: number) => {
+        setRoundState((prev) => ({ ...prev, points: { ...prev.points, them: points } }));
+    }, []);
+
+    const addPointsToTable = useCallback(() => {
+        addRoundToTable(roundState);
     }, [addRoundToTable, roundState]);
 
     const providerValue = useMemo(() => ({
@@ -53,14 +63,18 @@ function RoundProvider(props: { children: React.ReactNode }) {
         addRoem,
         addWhoGoes,
         addTurf,
-        addPoints,
+        addWePoints,
+        addThemPoints,
+        addPointsToTable,
     }), [
         roundState,
         setRoundState,
         addRoem,
         addWhoGoes,
         addTurf,
-        addPoints,
+        addWePoints,
+        addThemPoints,
+        addPointsToTable,
     ]);
 
     return (

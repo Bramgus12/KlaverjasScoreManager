@@ -20,5 +20,7 @@ export type ContextType = {
     addRoem: (roem: PointsRoemState) => void;
     addWhoGoes: (whoGoes: WhoGoesType) => void;
     addTurf: (turf: TurfType) => void;
-    addPoints: (points: PointsRoemState) => void;
+    addWePoints: (points: number) => void;
+    addThemPoints: (points: number) => void;
+    addPointsToTable: () => void;
 };

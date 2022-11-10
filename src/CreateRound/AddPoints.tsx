@@ -11,9 +11,11 @@ import {
     Button, FAB, Text, TextInput,
 } from "react-native-paper";
 import { RoutingType } from "../../RoutingType";
+import parseNumber from "../../utils/parseNumber";
 import { CreateRoundRoutingType } from "./CreateRoundRoutingType";
 import { RoundContext } from "./RoundContext";
 import { WhoGoesType } from "./RoundContextTypes";
+import TotalPoints from "./TotalPoints";
 
 type FormType = {
     we: string;
@@ -72,7 +74,9 @@ function AddPoints(props: { navigation: AddPointsNavigationProp }) {
         },
     });
 
-    const { roundState, addPoints } = useContext(RoundContext);
+    const {
+        roundState, addWePoints, addThemPoints, addPointsToTable,
+    } = useContext(RoundContext);
     // eslint-disable-next-line react/prop-types
     const { navigation } = props;
 
@@ -129,19 +133,10 @@ function AddPoints(props: { navigation: AddPointsNavigationProp }) {
         );
     }, [styles.buttons, styles.buttonsContainer]);
 
-    const TotalPoints = useCallback((_props: { roem: number, points: number }) => {
-        const { roem, points } = _props;
-        return (
-            <Text style={styles.formColumnText}>
-                {`Total: ${roem + points}`}
-            </Text>
-        );
-    }, [styles.formColumnText]);
-
-    const handleToNextPage = useCallback((state: FormType) => {
-        addPoints({ we: parseInt(state.we, 10), them: parseInt(state.them, 10) });
+    const handleToNextPage = useCallback(() => {
+        addPointsToTable();
         navigation.navigate("TableView");
-    }, [addPoints, navigation]);
+    }, [addPointsToTable, navigation]);
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -177,12 +172,18 @@ function AddPoints(props: { navigation: AddPointsNavigationProp }) {
                                     keyboardType="numeric"
                                     maxLength={3}
                                     value={value}
-                                    onChangeText={onChange}
+                                    onChangeText={(text) => {
+                                        onChange(text);
+                                        addWePoints(parseNumber(text));
+                                    }}
                                     onBlur={onBlur}
                                 />
                             )}
                         />
-                        <TotalPoints roem={roundState.roem.we} points={roundState.points.we} />
+                        <TotalPoints
+                            roem={roundState.roem.we}
+                            points={parseNumber(getValues().we)}
+                        />
                         <Buttons
                             isGoing={roundState.whoGoes === "we"}
                             team="we"
@@ -218,12 +219,17 @@ function AddPoints(props: { navigation: AddPointsNavigationProp }) {
                                     keyboardType="numeric"
                                     maxLength={3}
                                     value={value}
-                                    onChangeText={onChange}
+                                    onChangeText={(text) => {
+                                        onChange(text);
+                                        addThemPoints(parseNumber(text));
+                                    }}
                                 />
                             )}
                         />
-
-                        <TotalPoints roem={roundState.roem.them} points={roundState.points.them} />
+                        <TotalPoints
+                            roem={roundState.roem.them}
+                            points={parseNumber(getValues().them)}
+                        />
                         <Buttons
                             isGoing={roundState.whoGoes === "them"}
                             team="them"
