@@ -35,7 +35,7 @@ export function TableProvider(props: { children: React.ReactNode }) {
                 ...prev,
                 tableData: [
                     ...prev.tableData,
-                    round,
+                    { ...round, roundNumber: prev.tableData.length + 1 },
                 ],
             }
         ));

@@ -12,6 +12,7 @@ export type RoundStateType = {
     turf: TurfType;
     roem: PointsRoemState;
     points: PointsRoemState;
+    roundNumber?: number;
 };
 
 export type ContextType = {

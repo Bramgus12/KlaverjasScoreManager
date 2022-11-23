@@ -77,7 +77,6 @@ function AddPoints(props: { navigation: AddPointsNavigationProp }) {
     const {
         roundState, addWePoints, addThemPoints, addPointsToTable,
     } = useContext(RoundContext);
-    // eslint-disable-next-line react/prop-types
     const { navigation } = props;
 
     const {
@@ -90,9 +89,18 @@ function AddPoints(props: { navigation: AddPointsNavigationProp }) {
     });
 
     const handlePitPress = useCallback((team: WhoGoesType) => {
+        if (team === "we") {
+            setValue(team, "162");
+            addWePoints(162);
+            setValue("them", "0");
+            addThemPoints(0);
+            return;
+        }
         setValue(team, "162");
-        setValue((team === "we") ? "them" : "we", "0");
-    }, [setValue]);
+        addThemPoints(162);
+        setValue("we", "0");
+        addWePoints(0);
+    }, [addThemPoints, addWePoints, setValue]);
 
     const handleNatPress = useCallback((team: WhoGoesType) => {
         setValue(team, "0");

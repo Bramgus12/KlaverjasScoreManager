@@ -6,7 +6,8 @@ import {
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CreateRoundRoutingType } from "./CreateRoundRoutingType";
-import { PointsRoemState, RoundContext } from "./RoundContext";
+import { RoundContext } from "./RoundContext";
+import { PointsRoemState } from "./RoundContextTypes";
 
 function AddRoem(props: { theme: MD3Theme, navigation: NavigationProp<CreateRoundRoutingType, "AddRoem"> }) {
     const { theme: { colors }, navigation } = props;

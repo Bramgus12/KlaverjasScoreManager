@@ -1,12 +1,15 @@
 import { NavigationProp } from "@react-navigation/native";
+import { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import {
     FAB, MD3Theme, Text, withTheme,
 } from "react-native-paper";
 import { RoutingType } from "../../RoutingType";
+import { TableContext } from "./TableContext";
 
 function TableView(props: { theme: MD3Theme, navigation: NavigationProp<RoutingType, "TableView"> }) {
     const { navigation, theme: { colors } } = props;
+    const { tableState } = useContext(TableContext);
 
     const styles = StyleSheet.create({
         column: {
@@ -64,10 +67,10 @@ function TableView(props: { theme: MD3Theme, navigation: NavigationProp<RoutingT
         <View style={styles.container}>
             <View style={styles.numberColumn}>
                 <View style={{ ...styles.topRowNumber, borderTopLeftRadius: 10 }} />
-                {Array.from(Array(10).keys()).map((number) => (
-                    <View style={styles.row} key={number}>
+                {tableState.tableData.map((round) => (
+                    <View style={styles.row} key={round.roundNumber}>
                         <Text variant="headlineSmall" style={styles.text}>
-                            {number}
+                            {round.roundNumber}
                         </Text>
                     </View>
                 ))}
@@ -78,10 +81,10 @@ function TableView(props: { theme: MD3Theme, navigation: NavigationProp<RoutingT
                         Wij
                     </Text>
                 </View>
-                {[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((number) => (
-                    <View style={styles.row} key={number}>
+                {tableState.tableData.map((round) => (
+                    <View style={styles.row} key={round.roundNumber}>
                         <Text variant="headlineSmall" style={styles.text}>
-                            {number}
+                            {round.points.we + round.roem.we}
                         </Text>
                     </View>
                 ))}
@@ -92,10 +95,10 @@ function TableView(props: { theme: MD3Theme, navigation: NavigationProp<RoutingT
                         Zij
                     </Text>
                 </View>
-                {[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((number) => (
-                    <View style={styles.row} key={number}>
+                {tableState.tableData.map((round) => (
+                    <View style={styles.row} key={round.roundNumber}>
                         <Text variant="headlineSmall" style={styles.text}>
-                            {number}
+                            {round.points.them + round.roem.them}
                         </Text>
                     </View>
                 ))}
