@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CreateRound from ".";
 import AddPoints from "./AddPoints";
 import AddRoem from "./AddRoem";
-import { CreateRoundRoutingType } from "./CreateRoundRoutingType";
+import { CreateRoundRoutingType } from "../../Types/CreateRoundRoutingTypes";
 import RoundProvider from "./RoundContext";
 
 const Stack = createNativeStackNavigator<CreateRoundRoutingType>();

@@ -2,7 +2,7 @@ import { NavigationProp } from "@react-navigation/native";
 import { useCallback, useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { Text, Button } from "react-native-paper";
-import { RoutingType } from "../RoutingType";
+import { RoutingType } from "../Types/RoutingTypes";
 import { TableContext } from "./TableView/TableContext";
 
 function Main(props: { navigation: NavigationProp<RoutingType, "Home"> }) {

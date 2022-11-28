@@ -1,22 +1,10 @@
 import {
     createContext, useCallback, useMemo, useState,
 } from "react";
-import { RoundStateType } from "../CreateRound/RoundContextTypes";
+import { RoundStateType } from "../../Types/RoundTypes";
+import { AmountOfPlayersType, TableContextType, TableStateType } from "../../Types/TableTypes";
 
-export type AmountOfPlayersType = 3 | 4;
-
-export type TableStateType = {
-    amountOfPlayers?: AmountOfPlayersType;
-    tableData: RoundStateType[];
-};
-
-type ContextType = {
-    tableState?: TableStateType;
-    addAmountOfPlayers?: (AmountOfPlayers: AmountOfPlayersType) => void;
-    addRoundToTable?: (round: RoundStateType) => void;
-};
-
-export const TableContext = createContext<ContextType>({
+export const TableContext = createContext<TableContextType>({
     tableState: null,
     addAmountOfPlayers: null,
     addRoundToTable: null,

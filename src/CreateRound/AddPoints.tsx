@@ -10,11 +10,11 @@ import {
 import {
     Button, FAB, Text, TextInput,
 } from "react-native-paper";
-import { RoutingType } from "../../RoutingType";
+import { WhoGoesType } from "../../Types/RoundTypes";
+import { RoutingType } from "../../Types/RoutingTypes";
 import parseNumber from "../../utils/parseNumber";
-import { CreateRoundRoutingType } from "./CreateRoundRoutingType";
+import { CreateRoundRoutingType } from "../../Types/CreateRoundRoutingTypes";
 import { RoundContext } from "./RoundContext";
-import { WhoGoesType } from "./RoundContextTypes";
 import TotalPoints from "./TotalPoints";
 
 type FormType = {

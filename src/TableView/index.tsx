@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import {
     FAB, MD3Theme, Text, withTheme,
 } from "react-native-paper";
-import { RoutingType } from "../../RoutingType";
+import { RoutingType } from "../../Types/RoutingTypes";
 import { TableContext } from "./TableContext";
 
 function TableView(props: { theme: MD3Theme, navigation: NavigationProp<RoutingType, "TableView"> }) {

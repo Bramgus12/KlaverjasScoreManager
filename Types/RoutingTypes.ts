@@ -1,5 +1,5 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
-import { CreateRoundRoutingType } from "./src/CreateRound/CreateRoundRoutingType";
+import { CreateRoundRoutingType } from "./CreateRoundRoutingTypes";
 
 export type RoutingType = {
     Home: undefined,

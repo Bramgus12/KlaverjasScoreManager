@@ -10,8 +10,9 @@ import {
     Text,
 } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
-import { RoutingType } from "../../RoutingType";
-import { RoundContext, TurfType, WhoGoesType } from "./RoundContext";
+import { TurfType, WhoGoesType } from "../../Types/RoundTypes";
+import { RoutingType } from "../../Types/RoutingTypes";
+import { RoundContext } from "./RoundContext";
 
 type FormType = {
     whoGoes: WhoGoesType;
@@ -75,7 +76,7 @@ function CreateRound(props: { navigation: NavigationProp<RoutingType, "CreateRou
     const onSubmit = useCallback((state: FormType) => {
         addWhoGoes(state.whoGoes);
         addTurf(state.turf);
-        navigation.navigate("AddRoem");
+        navigation.navigate("CreateRound", { screen: "AddRoem" });
     }, [addTurf, addWhoGoes, navigation]);
 
     return (

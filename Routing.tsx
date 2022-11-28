@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { RoutingType } from "./RoutingType";
+import { RoutingType } from "./Types/RoutingTypes";
 import Main from "./src/Main";
 import TableView from "./src/TableView";
 import CreateRoundRouting from "./src/CreateRound/CreateRoundRouting";
