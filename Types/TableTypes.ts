@@ -1,3 +1,4 @@
+import { Moment } from "moment";
 import { RoundStateType } from "./RoundTypes";
 
 export type AmountOfPlayersType = 3 | 4;
@@ -6,6 +7,7 @@ export type TableStateType = {
     amountOfPlayers?: AmountOfPlayersType;
     tableData: RoundStateType[];
     tableId?: string;
+    date?: Moment;
 };
 
 export type TableContextType = {

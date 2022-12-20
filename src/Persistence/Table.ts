@@ -14,8 +14,8 @@ async function SetTable(tableState: TableStateType): Promise<string> {
         if (tableState.tableId != null) {
             id = tableState.tableId;
         }
-        await Promise.resolve(AsyncStorage.setItem(id, json));
-        return id;
+        await AsyncStorage.setItem(id, json);
+        return await Promise.resolve(id);
     } catch (error) {
         return Promise.reject(error);
     }
@@ -33,8 +33,17 @@ async function GetAllTables(): Promise<TableStateType[]> {
         )).map((value) => {
             const returnValue = JSON.parse(value[1]) as TableStateType;
             const id = value[0];
+            returnValue.date = moment(id.replace("table-", ""));
             returnValue.tableId = id;
             return returnValue;
+        }).sort((a, b) => {
+            if (a.date.isSame(b.date)) {
+                return 0;
+            }
+            if (a.date.isBefore(b.date)) {
+                return 1;
+            }
+            return -1;
         }));
     } catch (error) {
         return Promise.reject(error);
