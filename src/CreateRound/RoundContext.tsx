@@ -1,12 +1,12 @@
 import {
     createContext, useCallback, useContext, useMemo, useState,
 } from "react";
-import { TableContext } from "../TableView/TableContext";
 import {
-    ContextType, PointsRoemState, RoundStateType, TurfType, WhoGoesType,
-} from "./RoundContextTypes";
+    PointsRoemState, RoundContextType, RoundStateType, TurfType, WhoGoesType,
+} from "../../Types/RoundTypes";
+import { TableContext } from "../TableView/TableContext";
 
-export const RoundContext = createContext<ContextType>({
+export const RoundContext = createContext<RoundContextType>({
     roundState: null,
     setRoundState: null,
     addRoem: null,

@@ -30,6 +30,7 @@
       4,
       { "checkAttributes": true, "indentLogicalExpressions": true }
     ],
-    "react/jsx-indent-props": [2, 4]
+    "react/jsx-indent-props": [2, 4],
+    "linebreak-style": 0
   }
 }

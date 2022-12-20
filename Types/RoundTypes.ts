@@ -15,7 +15,7 @@ export type RoundStateType = {
     roundNumber?: number;
 };
 
-export type ContextType = {
+export type RoundContextType = {
     roundState: RoundStateType;
     setRoundState: React.Dispatch<React.SetStateAction<RoundStateType>>;
     addRoem: (roem: PointsRoemState) => void;
