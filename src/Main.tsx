@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { DataTable, Text } from "react-native-paper";
+import { DataTable, FAB, Text } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { NavigationProp } from "@react-navigation/native";
 import { HomeStateType } from "../Types/HomeTypes";
+import { RoutingType } from "../Types/RoutingTypes";
 import { GetAllTables } from "./Persistence/Table";
 
-function Main() {
+function Main(props: { navigation: NavigationProp<RoutingType, "Home"> }) {
+    const { navigation } = props;
+
     const [state, setState] = useState<HomeStateType>({
         isLoading: true,
         tables: null,
@@ -14,10 +19,19 @@ function Main() {
         container: {
             flex: 1,
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "flex-start",
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
             width: "100%",
+        },
+        appTitle: {
+            marginTop: 75,
+            marginBottom: 32,
+        },
+        fabStyle: {
+            bottom: 32,
+            right: 32,
+            position: "absolute",
         },
     });
 
@@ -47,7 +61,10 @@ function Main() {
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+            <Text variant="headlineLarge" style={styles.appTitle}>
+                Klaverjas scoreboard
+            </Text>
             <DataTable>
                 <DataTable.Header>
                     <DataTable.Title style={{ flex: 3 }}>Datum</DataTable.Title>
@@ -55,7 +72,7 @@ function Main() {
                     <DataTable.Title numeric>Totaal zij</DataTable.Title>
                 </DataTable.Header>
                 {state.tables.map((table) => (
-                    <DataTable.Row>
+                    <DataTable.Row key={table.date.unix()}>
                         <DataTable.Cell style={{ flex: 3 }}>
                             {table.date.format("LLL")}
                         </DataTable.Cell>
@@ -64,7 +81,13 @@ function Main() {
                     </DataTable.Row>
                 ))}
             </DataTable>
-        </View>
+            <FAB
+                icon="plus"
+                label="Nieuw spel starten"
+                onPress={() => navigation.navigate("ChoosePlayers")}
+                style={styles.fabStyle}
+            />
+        </SafeAreaView>
     );
 }
 

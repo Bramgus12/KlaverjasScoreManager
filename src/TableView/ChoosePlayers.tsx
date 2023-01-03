@@ -13,9 +13,6 @@ export default function ChoosePlayers() {
             alignItems: "center",
             justifyContent: "center",
         },
-        appTitle: {
-            marginBottom: 150,
-        },
         buttonContainer: {
             display: "flex",
             flexDirection: "row",
@@ -41,9 +38,6 @@ export default function ChoosePlayers() {
 
     return (
         <View style={styles.container}>
-            <Text variant="headlineLarge" style={styles.appTitle}>
-                Klaverjas scoreboard
-            </Text>
             <Text>
                 Kies het aantal personen
             </Text>
