@@ -11,15 +11,15 @@ import {
 } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
 import { TurfType, WhoGoesType } from "../../Types/RoundTypes";
-import { RoutingType } from "../../Types/RoutingTypes";
 import { RoundContext } from "./RoundContext";
+import { TableRoutingType } from "../../Types/TableRoutingType";
 
 type FormType = {
     whoGoes: WhoGoesType;
     turf: TurfType;
 };
 
-function CreateRound(props: { navigation: NavigationProp<RoutingType, "CreateRound"> }) {
+function CreateRound(props: { navigation: NavigationProp<TableRoutingType, "CreateRound"> }) {
     const { navigation } = props;
     const { addWhoGoes, addTurf } = useContext(RoundContext);
     const { control, handleSubmit, formState: { errors } } = useForm<FormType>({

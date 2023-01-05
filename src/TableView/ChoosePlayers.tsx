@@ -1,9 +1,14 @@
 import { useCallback, useContext } from "react";
 import { View, StyleSheet } from "react-native";
 import { Button, Text } from "react-native-paper";
+import { NavigationProp } from "@react-navigation/native";
 import { TableContext } from "./TableContext";
+import { AmountOfPlayersType } from "../../Types/TableTypes";
+import { TableRoutingType } from "../../Types/TableRoutingType";
 
-export default function ChoosePlayers() {
+export default function ChoosePlayers(props: { navigation: NavigationProp<TableRoutingType, "ChoosePlayers"> }) {
+    const { navigation } = props;
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -32,9 +37,10 @@ export default function ChoosePlayers() {
 
     const { addAmountOfPlayers } = useContext(TableContext);
 
-    const handleButtonPress = useCallback((amountOfPlayers: 3 | 4) => {
+    const handleButtonPress = useCallback((amountOfPlayers: AmountOfPlayersType) => {
         addAmountOfPlayers(amountOfPlayers);
-    }, [addAmountOfPlayers]);
+        navigation.navigate("TableView");
+    }, [addAmountOfPlayers, navigation]);
 
     return (
         <View style={styles.container}>

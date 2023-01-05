@@ -1,9 +1,7 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
-import { CreateRoundRoutingType } from "./CreateRoundRoutingTypes";
+import { TableRoutingType } from "./TableRoutingType";
 
 export type RoutingType = {
     Home: undefined,
-    ChoosePlayers: undefined,
-    TableView: undefined,
-    CreateRound: NavigatorScreenParams<CreateRoundRoutingType>,
+    Table: NavigatorScreenParams<TableRoutingType>,
 };

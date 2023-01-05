@@ -84,7 +84,7 @@ function Main(props: { navigation: NavigationProp<RoutingType, "Home"> }) {
             <FAB
                 icon="plus"
                 label="Nieuw spel starten"
-                onPress={() => navigation.navigate("ChoosePlayers")}
+                onPress={() => navigation.navigate("Table", { screen: "ChoosePlayers" })}
                 style={styles.fabStyle}
             />
         </SafeAreaView>
