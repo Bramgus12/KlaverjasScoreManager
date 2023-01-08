@@ -1,7 +1,8 @@
 import { NavigationProp, RouteProp } from "@react-navigation/native";
 import { useContext, useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { FAB } from "react-native-paper";
+import { ActivityIndicator, FAB } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { TableRoutingType } from "../../Types/TableRoutingType";
 import Table from "./Table";
 import { TableContext } from "./TableContext";
@@ -15,13 +16,27 @@ function TableView(props: { navigation: NavigationProp<TableRoutingType, "TableV
             right: 32,
             position: "absolute",
         },
+        loadingSpinnerContainer: {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+        },
     });
 
     useEffect(() => {
-        if (route.params != null && tableState.tableId == null) {
+        if (route.params != null && tableState?.tableId == null) {
             getExistingTableStateById(route.params.tableId);
         }
     });
+
+    if (tableState?.tableId == null) {
+        return (
+            <SafeAreaView style={styles.loadingSpinnerContainer}>
+                <ActivityIndicator size="large" />
+            </SafeAreaView>
+        );
+    }
 
     return (
         <>

@@ -65,14 +65,11 @@ async function GetAllTableIds() {
 
 async function GetTableById(tableId: string) {
     try {
-        return await Promise.resolve((await AsyncStorage.getItem(tableId)
-            .then((jsonStringValue) => {
-                const returnValue = JSON.parse(jsonStringValue) as TableStateType;
-                returnValue.date = moment(tableId.replace("table-", ""));
-                returnValue.tableId = tableId;
-                return returnValue;
-            })
-        ));
+        const jsonStringValue = await AsyncStorage.getItem(tableId);
+        const returnValue = JSON.parse(jsonStringValue) as TableStateType;
+        returnValue.date = moment(tableId.replace("table-", ""));
+        returnValue.tableId = tableId;
+        return returnValue;
     } catch (error) {
         Promise.reject(error);
     }

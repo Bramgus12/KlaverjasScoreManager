@@ -6,5 +6,6 @@ export type HomeStateType = {
         date: Moment;
         totalWe: number;
         totalThem: number;
+        tableId: string,
     }>;
 };

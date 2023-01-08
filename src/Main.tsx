@@ -41,10 +41,12 @@ function Main(props: { navigation: NavigationProp<RoutingType, "Home"> }) {
                 ...prev,
                 tables: tableArray.map((table) => ({
                     totalThem: table.tableData
-                        .reduce((total, round) => total + round.points.them + round.roem.them, 0),
+                        .reduce((total, round) => (
+                            total + round.points.them + round.roem.them), 0),
                     totalWe: table.tableData
                         .reduce((total, round) => total + round.points.we + round.roem.we, 0),
                     date: table.date,
+                    tableId: table.tableId,
                 })),
             }))).finally(() => setState((prev) => ({ ...prev, isLoading: false })));
         }
@@ -75,7 +77,7 @@ function Main(props: { navigation: NavigationProp<RoutingType, "Home"> }) {
                     <DataTable.Row
                         key={table.date.unix()}
                         onPress={() => {
-                            navigation.navigate("Table", { screen: "TableView", params: { tableId: `table-${table.date}` } });
+                            navigation.navigate("Table", { screen: "TableView", params: { tableId: table.tableId } });
                         }}
                     >
                         <DataTable.Cell style={{ flex: 3 }}>
