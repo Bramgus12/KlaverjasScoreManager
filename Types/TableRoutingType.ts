@@ -3,6 +3,6 @@ import { CreateRoundRoutingType } from "./CreateRoundRoutingTypes";
 
 export type TableRoutingType = {
     ChoosePlayers: undefined,
-    TableView: undefined,
+    TableView: { tableId: string; },
     CreateRound: NavigatorScreenParams<CreateRoundRoutingType>,
 };

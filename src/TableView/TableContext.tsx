@@ -3,18 +3,20 @@ import {
 } from "react";
 import { RoundStateType } from "../../Types/RoundTypes";
 import { AmountOfPlayersType, TableContextType, TableStateType } from "../../Types/TableTypes";
-import { SetTable } from "../Persistence/Table";
+import { GetTableById, SetTable } from "../Persistence/Table";
 
 export const TableContext = createContext<TableContextType>({
     tableState: null,
     addAmountOfPlayers: null,
     addRoundToTable: null,
+    getExistingTableStateById: null,
 });
 
 export function TableProvider(props: { children: React.ReactNode }) {
     const { children } = props;
     const [tableState, setTableState] = useState<TableStateType>({
         amountOfPlayers: null,
+        tableId: null,
         tableData: [],
     });
 
@@ -51,11 +53,19 @@ export function TableProvider(props: { children: React.ReactNode }) {
         updateStateAndStorage({ amountOfPlayers });
     }, [updateStateAndStorage]);
 
+    const getExistingTableStateById = useCallback((tableId: string) => {
+        GetTableById(tableId).then((value) => {
+            setTableState(value);
+        });
+    }, []);
+
     return (
         <TableContext.Provider
             value={useMemo(() => (
-                { tableState, addRoundToTable, addAmountOfPlayers }
-            ), [addRoundToTable, tableState, addAmountOfPlayers])}
+                {
+                    tableState, addRoundToTable, addAmountOfPlayers, getExistingTableStateById,
+                }
+            ), [tableState, addRoundToTable, addAmountOfPlayers, getExistingTableStateById])}
         >
             {children}
         </TableContext.Provider>

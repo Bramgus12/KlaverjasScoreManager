@@ -72,7 +72,12 @@ function Main(props: { navigation: NavigationProp<RoutingType, "Home"> }) {
                     <DataTable.Title numeric>Totaal zij</DataTable.Title>
                 </DataTable.Header>
                 {state.tables.map((table) => (
-                    <DataTable.Row key={table.date.unix()}>
+                    <DataTable.Row
+                        key={table.date.unix()}
+                        onPress={() => {
+                            navigation.navigate("Table", { screen: "TableView", params: { tableId: `table-${table.date}` } });
+                        }}
+                    >
                         <DataTable.Cell style={{ flex: 3 }}>
                             {table.date.format("LLL")}
                         </DataTable.Cell>

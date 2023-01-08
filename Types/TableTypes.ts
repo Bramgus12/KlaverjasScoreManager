@@ -14,4 +14,5 @@ export type TableContextType = {
     tableState?: TableStateType;
     addAmountOfPlayers?: (AmountOfPlayers: AmountOfPlayersType) => void;
     addRoundToTable?: (round: RoundStateType) => void;
+    getExistingTableStateById?: (tableId: string) => void;
 };
