@@ -75,12 +75,19 @@ function AddPoints(props: { navigation: AddPointsNavigationProp }) {
     });
 
     const {
-        roundState, addWePoints, addThemPoints, addPointsToTable,
+        roundState, addWePoints, addThemPoints, addPointsToTable, addRoem,
     } = useContext(RoundContext);
     const { navigation } = props;
 
+    const handleToNextPage = useCallback(() => {
+        console.log(roundState);
+
+        addPointsToTable();
+        navigation.navigate("Table", { screen: "TableView" });
+    }, [addPointsToTable, navigation, roundState]);
+
     const {
-        control, getValues, handleSubmit, setValue,
+        control, getValues, handleSubmit, setValue, watch,
     } = useForm<FormType>({
         defaultValues: {
             we: "",
@@ -88,24 +95,49 @@ function AddPoints(props: { navigation: AddPointsNavigationProp }) {
         },
     });
 
+    console.log(watch());
+
     const handlePitPress = useCallback((team: WhoGoesType) => {
         if (team === "we") {
             setValue(team, "162");
             addWePoints(162);
             setValue("them", "0");
             addThemPoints(0);
+            addRoem({
+                we: roundState.roem.we + 100,
+                them: roundState.roem.them,
+            });
             return;
         }
         setValue(team, "162");
         addThemPoints(162);
         setValue("we", "0");
         addWePoints(0);
-    }, [addThemPoints, addWePoints, setValue]);
+        addRoem({
+            we: roundState.roem.we,
+            them: roundState.roem.them + 100,
+        });
+    }, [addRoem, addThemPoints, addWePoints, roundState.roem.them, roundState.roem.we, setValue]);
 
     const handleNatPress = useCallback((team: WhoGoesType) => {
-        setValue(team, "0");
-        setValue((team === "we") ? "them" : "we", "162");
-    }, [setValue]);
+        if (team === "we") {
+            setValue("we", "0");
+            setValue("them", "162");
+            addRoem({
+                we: 0,
+                them: roundState.roem.we + roundState.roem.them,
+            });
+            console.log(roundState);
+            return;
+        }
+        setValue("them", "0");
+        setValue("we", "162");
+        addRoem({
+            we: roundState.roem.we + roundState.roem.them,
+            them: 0,
+        });
+        console.log(roundState);
+    }, [addRoem, roundState, setValue]);
 
     const Buttons = useCallback((_props: {
         isGoing: boolean;
@@ -140,11 +172,6 @@ function AddPoints(props: { navigation: AddPointsNavigationProp }) {
             </View>
         );
     }, [styles.buttons, styles.buttonsContainer]);
-
-    const handleToNextPage = useCallback(() => {
-        addPointsToTable();
-        navigation.navigate("TableView");
-    }, [addPointsToTable, navigation]);
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

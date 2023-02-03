@@ -1,100 +1,89 @@
 import { useContext } from "react";
-import { StyleSheet, View } from "react-native";
-import { MD3Theme, Text, withTheme } from "react-native-paper";
+import { SafeAreaView, StyleSheet } from "react-native";
+import {
+    DataTable, withTheme,
+} from "react-native-paper";
 import { TableContext } from "./TableContext";
 
-function Table(props: { theme: MD3Theme }) {
-    const { theme: { colors } } = props;
+function Table() {
     const { tableState } = useContext(TableContext);
 
     const styles = StyleSheet.create({
-        column: {
-            height: "100%",
-            width: "80%",
-            display: "flex",
-            flexDirection: "column",
+        roemCell: {
+            borderRightWidth: 1,
+            borderRightColor: "lightgrey",
+            paddingRight: 8,
         },
-        numberColumn: {
-            width: "10%",
-            display: "flex",
-            flexDirection: "column",
-            height: "100%",
+        totalRow: {
+            borderTopColor: "lightgrey",
+            borderTopWidth: 1,
         },
-        topRow: {
-            height: 40,
-            display: "flex",
-            justifyContent: "center",
-            backgroundColor: colors.primary,
-        },
-        row: {
-            backgroundColor: colors.primaryContainer,
-        },
-        topRowNumber: {
-            height: 40,
-            backgroundColor: colors.primary,
-        },
-        text: {
-            textAlign: "center",
-        },
-        textHidden: {
-            backfaceVisibility: "hidden",
-        },
-        divider: {
-            height: "100%",
-            width: 1,
-            backgroundColor: "grey",
-        },
-        container: {
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            display: "flex",
-            flexDirection: "row",
-            padding: 90,
+        headerRow: {
+            borderBottomColor: "lightgrey",
+            borderBottomWidth: 1,
         },
     });
 
     return (
-        <View style={styles.container}>
-            <View style={styles.numberColumn}>
-                <View style={{ ...styles.topRowNumber, borderTopLeftRadius: 10 }} />
-                {tableState.tableData.map((round) => (
-                    <View style={styles.row} key={round.roundNumber}>
-                        <Text variant="headlineSmall" style={styles.text}>
-                            {round.roundNumber}
-                        </Text>
-                    </View>
-                ))}
-            </View>
-            <View style={styles.column}>
-                <View style={styles.topRow}>
-                    <Text variant="headlineMedium" style={{ ...styles.text, color: "white" }}>
+        <SafeAreaView>
+            <DataTable>
+                <DataTable.Header style={styles.headerRow}>
+                    <DataTable.Title numeric style={styles.roemCell}>
+                        Ronde
+                    </DataTable.Title>
+                    <DataTable.Title numeric>
                         Wij
-                    </Text>
-                </View>
-                {tableState.tableData.map((round) => (
-                    <View style={styles.row} key={round.roundNumber}>
-                        <Text variant="headlineSmall" style={styles.text}>
-                            {round.points.we + round.roem.we}
-                        </Text>
-                    </View>
-                ))}
-            </View>
-            <View style={styles.column}>
-                <View style={{ ...styles.topRow, borderTopRightRadius: 10 }}>
-                    <Text variant="headlineMedium" style={{ ...styles.text, color: "white" }}>
+                    </DataTable.Title>
+                    <DataTable.Title numeric style={styles.roemCell}>
+                        Roem
+                    </DataTable.Title>
+                    <DataTable.Title numeric>
                         Zij
-                    </Text>
-                </View>
-                {tableState.tableData.map((round) => (
-                    <View style={styles.row} key={round.roundNumber}>
-                        <Text variant="headlineSmall" style={styles.text}>
-                            {round.points.them + round.roem.them}
-                        </Text>
-                    </View>
+                    </DataTable.Title>
+                    <DataTable.Title numeric style={styles.roemCell}>
+                        Roem
+                    </DataTable.Title>
+                </DataTable.Header>
+                {tableState.tableData.map((item) => (
+                    <DataTable.Row key={item.roundNumber}>
+                        <DataTable.Cell numeric style={styles.roemCell}>
+                            {item.roundNumber}
+                        </DataTable.Cell>
+                        <DataTable.Cell numeric>
+                            {item.points.we}
+                        </DataTable.Cell>
+                        <DataTable.Cell numeric style={styles.roemCell}>
+                            {item.roem.we}
+                        </DataTable.Cell>
+                        <DataTable.Cell numeric>
+                            {item.points.them}
+                        </DataTable.Cell>
+                        <DataTable.Cell numeric style={styles.roemCell}>
+                            {item.roem.them}
+                        </DataTable.Cell>
+                    </DataTable.Row>
                 ))}
-            </View>
-        </View>
+                <DataTable.Row style={styles.totalRow}>
+                    <DataTable.Cell style={styles.roemCell}>
+                        Totaal
+                    </DataTable.Cell>
+                    <DataTable.Cell numeric>
+                        {tableState.tableData
+                            .reduce((acc, item) => (acc + item.points.we + item.roem.we), 0)}
+                    </DataTable.Cell>
+                    <DataTable.Cell numeric style={styles.roemCell}>
+                        -
+                    </DataTable.Cell>
+                    <DataTable.Cell numeric>
+                        {tableState.tableData
+                            .reduce((acc, item) => (acc + item.points.them + item.roem.them), 0)}
+                    </DataTable.Cell>
+                    <DataTable.Cell numeric style={styles.roemCell}>
+                        -
+                    </DataTable.Cell>
+                </DataTable.Row>
+            </DataTable>
+        </SafeAreaView>
     );
 }
 
